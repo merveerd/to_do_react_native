@@ -17,6 +17,7 @@ return (
         backgroundColor: 'pink',
         color: 'white',
         width: '85%',
+        height: '4%',
         marginTop: '7%',
         alignContent: 'center',
         justifyContent: 'center',

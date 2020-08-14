@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import {StyleSheet, Text, View, Button, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Button, ScrollView, TouchableOpacity, Image} from 'react-native';
 import Input from '../components/Input';
 
 import { updateList } from '../actions';
@@ -12,6 +12,7 @@ const ToDoDetails = (props) => {
   return (
     <ScrollView>
         <View  style={{alignItems: 'center', justifyContent: 'center', flex: 1, }}>
+
     <Input value = {title} placeholder = 'Title' style = {styles.title} changeText = {(value)=> setTitle(value)} />
     <Input value = {note} placeholder = 'Notes' style = {styles.note} changeText = {(value)=> setNote(value)} />
       <Button

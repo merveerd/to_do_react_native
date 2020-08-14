@@ -7,7 +7,8 @@ import {
   Text,
   StatusBar,
   KeyboardAvoidingView,
-  Button
+  Button,
+  TouchableOpacity, Image
 } from 'react-native';
 
 import {connect, useDispatch} from 'react-redux';
@@ -25,6 +26,10 @@ const Home = (props)=> {
       <View style={styles.item}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.note}>{item.note}</Text>
+      <TouchableOpacity style = {{alignItems: 'space-between'}} onPress = {props.onPress}>
+  <Image style={{ width: '15%', height: '50%'}}
+              source={require('../images/bin.png')}></Image>
+</TouchableOpacity>
     </View>);
 
     return (
