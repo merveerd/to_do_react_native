@@ -14,16 +14,14 @@ function AppNavigator(props){
       <Stack.Screen
         name="ToDoDetails"
         component={ToDoDetails}
-        // options={{
-        //   headerLeft: (props) => (
-        //     <HeaderBackButton
-        //       {...props}
-        //       onPress={() => {
-        //         navigation.navigate('Home');
-        //       }}
-        //     />
-        //   ),
-        // }}
+        options={({navigation}) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              onPress={() => {
+                navigation.navigate('Home');}}
+            />)
+          })}
       />
     </Stack.Navigator>
     </NavigationContainer>
