@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,16 +10,22 @@ import {
   Button
 } from 'react-native';
 
-const DATA = [];
+import {connect, useDispatch} from 'react-redux';
+import {getList} from '../actions'
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+
+
 const Home = (props)=> {
 
-    const renderItem = ({item}) => <Item title={item.title} />;
+  useEffect(()=> {
+    props.getList();
+  }, []);
+
+    const renderItem = ({item}) => (
+      <View style={styles.item}>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.note}>{item.note}</Text>
+    </View>);
 
     return (
       <SafeAreaView style={styles.container}>
@@ -27,14 +33,14 @@ const Home = (props)=> {
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
           style={{flex: 1}}>
           <FlatList
-            data={DATA}
+            data={props.todos}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.title}
             ListEmptyComponent={() => {//reverse can be added for seeing the newst at the top
               return (
                 <View style={{alignItems: 'center', margin: 70}}>
                   <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                    Please enter any to-do to see what is going on.
+                    Please enter any to-do to see what will be going on.
                   </Text>
                 </View>
               );
@@ -66,4 +72,9 @@ const styles = StyleSheet.create({
     },
   });
 
-export default Home;
+  const mapStateToProps = ({todoList}) => {
+  
+    const {todos,loading, data} = todoList;
+    return {todos, loading,data }
+  }
+  export default connect( mapStateToProps, { getList  } )(Home);

@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Button, ScrollView} from 'react-native';
-import Input from '../components/Input'
+import { connect } from 'react-redux';
+import {StyleSheet, Text, View, Button, ScrollView, TouchableOpacity} from 'react-native';
+import Input from '../components/Input';
+
+import { updateList } from '../actions';
 const ToDoDetails = (props) => {
 
  const [title, setTitle] = useState();
  const [note, setNote] = useState();
+
   return (
     <ScrollView>
         <View  style={{alignItems: 'center', justifyContent: 'center', flex: 1, }}>
@@ -13,6 +17,7 @@ const ToDoDetails = (props) => {
       <Button
         title={'Save'}
         onPress={() => {
+            props.updateList({title, note})
           props.navigation.navigate('Home');
         }}></Button>
         </View>
@@ -23,4 +28,14 @@ const styles = {
     title : { fontSize :40, fontWeight : 'bold'},
     note : {fontSize: 25}
 }
-export default ToDoDetails;
+
+const mapStateToProps = ({todoList} /*, ownProps*/) => {
+  
+    const {loading, todos} = todoList
+    return {
+    todos, loading
+    }
+  }
+
+export default connect( mapStateToProps, { updateList } )(ToDoDetails);
+
