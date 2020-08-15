@@ -3,6 +3,7 @@ import {
     LOADING_END,
     LOADING_START,
     UPDATE_LIST,
+    REMOVE_TODO,
     ADD_LIST_LOCAL
   } from '../actions/types';
   import AsyncStorage from '@react-native-community/async-storage'
@@ -30,7 +31,7 @@ import {
   
       case UPDATE_LIST:
         const obj = action.payload;
-        let arr = state.todos.slice()
+        let arr = state.todos.slice();
         arr.push(obj)
   
         AsyncStorage.setItem(ADD_LIST_LOCAL, JSON.stringify(arr))
@@ -40,8 +41,21 @@ import {
           todos: arr,
         };
   
+        case REMOVE_TODO:
+          const removedObj = action.payload.item;
+
+          let arrRemove = state.todos.slice();
   
-  
+          let removingIndex = arrRemove.findIndex(item => removedObj === item);
+          
+          removingIndex !== -1 && arrRemove.splice(removingIndex, 1);
+          
+          AsyncStorage.setItem(ADD_LIST_LOCAL, JSON.stringify(arrRemove))
+        //  arrRemove.indexOf(removedObj) !== -1 && arrRemove.splice(arrRemove.indexOf(removedObj), 1);
+        return {
+          ...state,
+          todos: arrRemove,
+        };
       case SET_LIST:
         return {
           ...state,

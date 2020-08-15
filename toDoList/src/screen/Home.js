@@ -8,11 +8,12 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Button,
-  TouchableOpacity, Image
+  TouchableOpacity, Image,
+  Alert
 } from 'react-native';
 
 import {connect, useDispatch} from 'react-redux';
-import {getList} from '../actions'
+import {getList, removeTodo} from '../actions'
 
 
 
@@ -26,8 +27,18 @@ const Home = (props)=> {
       <View style={styles.item}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.note}>{item.note}</Text>
-      <TouchableOpacity style = {{alignItems: 'space-between'}} onPress = {props.onPress}>
-  <Image style={{ width: '15%', height: '50%'}}
+      <TouchableOpacity style = {{alignItems: 'space-between'}} onPress = {() => {
+        Alert.alert( 'Permission','Are you sure you want to delete it?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {},
+          },
+          { text: 'OK', onPress: () =>props.removeTodo({item}) }
+        ],
+        { cancelable: false })
+       }}>
+  <Image style={{ width: 40, height: 60}}
               source={require('../images/bin.png')}></Image>
 </TouchableOpacity>
     </View>);
@@ -43,7 +54,7 @@ const Home = (props)=> {
             keyExtractor={(item) => item.title}
             ListEmptyComponent={() => {//reverse can be added for seeing the newst at the top
               return (
-                <View style={{alignItems: 'center', margin: 70}}>
+                <View style={{alignItems: 'center', margin: 30}}>
                   <Text style={{fontSize: 20, fontWeight: 'bold'}}>
                     Please enter any to-do to see what will be going on.
                   </Text>
@@ -68,13 +79,16 @@ const styles = StyleSheet.create({
     },
     item: {
       backgroundColor: '#f9c2ff',
-      padding: 20,
+      padding: 10,
       marginVertical: 8,
       marginHorizontal: 16,
     },
     title: {
       fontSize: 32,
     },
+    note: {
+ 
+    }
   });
 
   const mapStateToProps = ({todoList}) => {
@@ -82,4 +96,4 @@ const styles = StyleSheet.create({
     const {todos,loading, data} = todoList;
     return {todos, loading,data }
   }
-  export default connect( mapStateToProps, { getList  } )(Home);
+  export default connect( mapStateToProps, { getList, removeTodo } )(Home);

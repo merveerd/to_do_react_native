@@ -18,8 +18,13 @@ const ToDoDetails = (props) => {
       <Button
         title={'Save'}
         onPress={() => {
-            props.updateList({title, note})
+         if( !title || !note){
+           alert('Please fill both area');
+         }else{
+          props.updateList({title, note}); // title: title, note: note
           props.navigation.navigate('Home');
+         }
+          
         }}></Button>
         </View>
     </ScrollView>

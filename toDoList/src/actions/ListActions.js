@@ -1,6 +1,7 @@
 import {
     UPDATE_LIST,
     SET_LIST,
+    REMOVE_TODO,
     ADD_LIST_LOCAL
 } from './types'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -20,5 +21,11 @@ export const getList = () => {
             dispatch({  type: SET_LIST, payload: JSON.parse(data) })
         }
             
+    }
+}
+
+export const removeTodo = (payload) => {
+    return(dispatch) => {
+        dispatch({  type: REMOVE_TODO, payload })
     }
 }
