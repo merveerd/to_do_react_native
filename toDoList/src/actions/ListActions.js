@@ -2,7 +2,9 @@ import {
     UPDATE_LIST,
     SET_LIST,
     REMOVE_TODO,
-    ADD_LIST_LOCAL
+    UPDATE_TODO,
+    ADD_LIST_LOCAL,
+    KEEP_ID
 } from './types'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -12,6 +14,19 @@ export const updateList = (payload) => { //Tododetails ten payload'i getirdik ob
        dispatch({  type: UPDATE_LIST, payload })
     }
 }
+
+export const updateTodo = (payload) => { //Tododetails ten payload'i getirdik object olarak, input valuelari cekip
+    return (dispatch) => {
+       dispatch({  type: UPDATE_TODO, payload })
+    }
+}
+
+export const keepID = () => { //Tododetails ten payload'i getirdik object olarak, input valuelari cekip
+    return (dispatch) => {
+       dispatch({  type: KEEP_ID })
+    }
+}
+
 
 export const getList = () => {
     return async (dispatch) => {

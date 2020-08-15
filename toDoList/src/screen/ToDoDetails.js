@@ -2,12 +2,20 @@ import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import {StyleSheet, Text, View, Button, ScrollView, TouchableOpacity, Image} from 'react-native';
 import Input from '../components/Input';
+import UUIDGenerator from 'react-native-uuid-generator';
 
-import { updateList } from '../actions';
+import { updateList, keepID } from '../actions';
+
 const ToDoDetails = (props) => {
 
  const [title, setTitle] = useState();
  const [note, setNote] = useState();
+
+//  UUIDGenerator.getRandomUUID((uuid) => {
+
+//  console.log(uniqID)
+//   });
+//  const key = uniqID;
 
   return (
     <ScrollView>
@@ -15,13 +23,16 @@ const ToDoDetails = (props) => {
 
     <Input value = {title} placeholder = 'Title' style = {styles.title} changeText = {(value)=> setTitle(value)} />
     <Input value = {note} placeholder = 'Notes' style = {styles.note} changeText = {(value)=> setNote(value)} />
-      <Button
+      <Button //get it as a component module
         title={'Save'}
         onPress={() => {
          if( !title || !note){
            alert('Please fill both area');
-         }else{
-          props.updateList({title, note}); // title: title, note: note
+         }else{ 
+           console.log(props)
+           props.keepID();
+           console.log('AFTER',props);
+          props.updateList({title, note, key: props.route.key}); // title: title, note: note
           props.navigation.navigate('Home');
          }
           
@@ -43,5 +54,5 @@ const mapStateToProps = ({todoList} /*, ownProps*/) => {
     }
   }
 
-export default connect( mapStateToProps, { updateList } )(ToDoDetails);
+export default connect( mapStateToProps, { updateList, keepID } )(ToDoDetails);
 

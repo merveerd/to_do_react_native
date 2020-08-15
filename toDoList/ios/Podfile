@@ -8,6 +8,8 @@ target 'toDoList' do
  
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-uuid-generator', :path => '../node_modules/react-native-uuid-generator'
+
   target 'toDoListTests' do
     inherit! :complete
     # Pods for testing
